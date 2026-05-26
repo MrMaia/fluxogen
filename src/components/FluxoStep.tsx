@@ -170,7 +170,7 @@ export default function FluxoStepCard({
                 <button
                   onClick={() => onNavigateToStep(step.nextStepId!)}
                   className="inline-flex items-center gap-1 text-slate-600 hover:text-[#4f8ef7] transition-colors"
-                  title={`Ir para etapa ${nextNum}`}
+                  title={`Ir para tarefa ${nextNum}`}
                 >
                   <span className="text-[10px]">→</span>
                   <span className="w-5 h-5 rounded-full bg-[#4f8ef7]/15 text-[#4f8ef7] text-[10px] font-black flex items-center justify-center leading-none hover:bg-[#4f8ef7]/25">{nextNum}</span>
@@ -193,7 +193,7 @@ export default function FluxoStepCard({
             onPointerDown={e => e.stopPropagation()}
             onClick={e => { e.stopPropagation(); onAddAfter() }}
             className="w-6 h-6 rounded-full bg-[#0f0f1a] border-2 border-[#4f8ef7]/40 hover:border-[#4f8ef7] text-[#4f8ef7] text-sm flex items-center justify-center hover:bg-[#4f8ef7]/15 transition-all leading-none font-bold shadow-sm"
-            title="Adicionar etapa após"
+            title="Adicionar tarefa após"
           >+</button>
         </div>
       )}
@@ -226,7 +226,7 @@ export default function FluxoStepCard({
                       onPointerDown={e => e.stopPropagation()}
                       onClick={e => { e.stopPropagation(); onAddBranchYes() }}
                       className="w-4 h-4 rounded-full bg-[#3ecf8e]/10 hover:bg-[#3ecf8e]/25 text-[#3ecf8e] text-[9px] flex items-center justify-center border border-[#3ecf8e]/20 hover:border-[#3ecf8e]/50 transition-all leading-none"
-                      title="Adicionar etapa neste caminho"
+                      title="Adicionar tarefa neste caminho"
                     >+</button>
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function FluxoStepCard({
                       onPointerDown={e => e.stopPropagation()}
                       onClick={e => { e.stopPropagation(); onAddBranchNo() }}
                       className="w-4 h-4 rounded-full bg-[#e85d75]/10 hover:bg-[#e85d75]/25 text-[#e85d75] text-[9px] flex items-center justify-center border border-[#e85d75]/20 hover:border-[#e85d75]/50 transition-all leading-none"
-                      title="Adicionar etapa neste caminho"
+                      title="Adicionar tarefa neste caminho"
                     >+</button>
                   </div>
                 </div>

@@ -20,6 +20,7 @@ interface Props {
   item: Item
   accentColor: string
   types?: ItemType[]
+  roleLabel?: string
   dragListeners?: SyntheticListenerMap
   dragAttributes?: DraggableAttributes
   isDragging?: boolean
@@ -27,7 +28,7 @@ interface Props {
   onDelete: () => void
 }
 
-export default function ItemCard({ item, accentColor, types, dragListeners, dragAttributes, isDragging, onUpdate, onDelete }: Props) {
+export default function ItemCard({ item, accentColor, types, roleLabel = 'Responsável', dragListeners, dragAttributes, isDragging, onUpdate, onDelete }: Props) {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(item.name)
   const [role, setRole] = useState(item.role ?? '')
@@ -54,7 +55,7 @@ export default function ItemCard({ item, accentColor, types, dragListeners, drag
           value={role}
           onChange={e => setRole(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') setEditing(false) }}
-          placeholder="Responsável (ex: CLIENTE)"
+          placeholder={`${roleLabel} (ex: CLIENTE)`}
           className="w-full bg-transparent text-slate-400 text-xs border-b border-[#2a2a4a] pb-1 mb-3 focus:outline-none uppercase"
         />
         {types && types.length > 0 && (

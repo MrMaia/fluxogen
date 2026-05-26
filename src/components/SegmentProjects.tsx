@@ -16,22 +16,39 @@ export default function SegmentProjects({ segment, onBack, onOpenProject }: Prop
   const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [version, setVersion] = useState('')
+  const [projectDate, setProjectDate] = useState('')
+  const [approvedBy, setApprovedBy] = useState('')
   const [deleteTarget, setDeleteTarget] = useState<Project | null>(null)
   const [editTarget, setEditTarget] = useState<Project | null>(null)
   const [editName, setEditName] = useState('')
   const [editDescription, setEditDescription] = useState('')
+  const [editVersion, setEditVersion] = useState('')
+  const [editProjectDate, setEditProjectDate] = useState('')
+  const [editApprovedBy, setEditApprovedBy] = useState('')
 
   function handleCreate() {
     if (!name.trim()) return
-    createProject(segment.id, name.trim(), description.trim() || undefined)
-    setName('')
-    setDescription('')
+    createProject(
+      segment.id, name.trim(),
+      description.trim() || undefined,
+      version.trim() || undefined,
+      projectDate || undefined,
+      approvedBy.trim() || undefined,
+    )
+    setName(''); setDescription(''); setVersion(''); setProjectDate(''); setApprovedBy('')
     setShowModal(false)
   }
 
   function handleEdit() {
     if (!editTarget || !editName.trim()) return
-    updateProject(editTarget.id, editName.trim(), editDescription.trim() || undefined)
+    updateProject(
+      editTarget.id, editName.trim(),
+      editDescription.trim() || undefined,
+      editVersion.trim() || undefined,
+      editProjectDate || undefined,
+      editApprovedBy.trim() || undefined,
+    )
     setEditTarget(null)
   }
 
@@ -40,6 +57,9 @@ export default function SegmentProjects({ segment, onBack, onOpenProject }: Prop
     setEditTarget(p)
     setEditName(p.name)
     setEditDescription(p.description ?? '')
+    setEditVersion(p.version ?? '')
+    setEditProjectDate(p.projectDate ?? '')
+    setEditApprovedBy(p.approvedBy ?? '')
   }
 
   function stepCount(p: Project) {
@@ -113,7 +133,7 @@ export default function SegmentProjects({ segment, onBack, onOpenProject }: Prop
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#4f8ef7] inline-block"></span>
-                    {stepCount(p)} etapas
+                    {stepCount(p)} tarefas
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] inline-block"></span>
@@ -150,10 +170,39 @@ export default function SegmentProjects({ segment, onBack, onOpenProject }: Prop
               onChange={e => setDescription(e.target.value)}
               placeholder="Descrição opcional"
               rows={2}
-              className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-6 focus:outline-none focus:border-[#4f8ef7] resize-none text-sm"
+              className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-4 focus:outline-none focus:border-[#4f8ef7] resize-none text-sm"
             />
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Versão</label>
+                <input
+                  value={version}
+                  onChange={e => setVersion(e.target.value)}
+                  placeholder="ex: 1.0"
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Data</label>
+                <input
+                  type="date"
+                  value={projectDate}
+                  onChange={e => setProjectDate(e.target.value)}
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Aprovado Por</label>
+                <input
+                  value={approvedBy}
+                  onChange={e => setApprovedBy(e.target.value)}
+                  placeholder="ex: João"
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+            </div>
             <div className="flex gap-3 justify-end">
-              <button onClick={() => { setShowModal(false); setName(''); setDescription('') }} className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm">
+              <button onClick={() => { setShowModal(false); setName(''); setDescription(''); setVersion(''); setProjectDate(''); setApprovedBy('') }} className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm">
                 Cancelar
               </button>
               <button
@@ -188,8 +237,37 @@ export default function SegmentProjects({ segment, onBack, onOpenProject }: Prop
               onChange={e => setEditDescription(e.target.value)}
               placeholder="Descrição opcional"
               rows={2}
-              className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-6 focus:outline-none focus:border-[#4f8ef7] resize-none text-sm"
+              className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-4 focus:outline-none focus:border-[#4f8ef7] resize-none text-sm"
             />
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Versão</label>
+                <input
+                  value={editVersion}
+                  onChange={e => setEditVersion(e.target.value)}
+                  placeholder="ex: 1.0"
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Data</label>
+                <input
+                  type="date"
+                  value={editProjectDate}
+                  onChange={e => setEditProjectDate(e.target.value)}
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-400 mb-1">Aprovado Por</label>
+                <input
+                  value={editApprovedBy}
+                  onChange={e => setEditApprovedBy(e.target.value)}
+                  placeholder="ex: João"
+                  className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 focus:outline-none focus:border-[#4f8ef7] text-sm"
+                />
+              </div>
+            </div>
             <div className="flex gap-3 justify-end">
               <button onClick={() => setEditTarget(null)} className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm">
                 Cancelar

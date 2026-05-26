@@ -4,10 +4,13 @@ import {
   type DragStartEvent, type DragEndEvent, type DragOverEvent,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import { FileDown } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import EntradasPanel from './EntradasPanel'
 import FluxoPanel from './FluxoPanel'
 import SaidasPanel from './SaidasPanel'
+import FlowPdf from './FlowPdf'
 
 interface Props {
   projectId: string
@@ -161,14 +164,28 @@ export default function ProjectView({ projectId, onBack }: Props) {
           )}
 
           <div className="ml-auto flex items-center gap-4 text-xs text-slate-600">
-            <span className="hidden md:block">
-              {new Date(project.createdAt).toLocaleDateString('pt-BR')}
-            </span>
+            {project.version && <span className="hidden lg:block text-slate-500">v{project.version}</span>}
+            {project.projectDate && <span className="hidden lg:block text-slate-500">{project.projectDate}</span>}
+            {project.approvedBy && <span className="hidden lg:block text-slate-500">Aprov. {project.approvedBy}</span>}
             <span>
               <span className="text-[#3ecf8e]">{project.entradas.length}</span> entr. ·{' '}
-              <span className="text-[#4f8ef7]">{totalSteps}</span> etapas ·{' '}
+              <span className="text-[#4f8ef7]">{totalSteps}</span> tarefas ·{' '}
               <span className="text-[#f5a623]">{project.saidas.length}</span> saídas
             </span>
+            <PDFDownloadLink
+              document={<FlowPdf project={project} />}
+              fileName={`${project.name.replace(/\s+/g, '_')}_fluxo.pdf`}
+            >
+              {({ loading }) => (
+                <button
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15 text-slate-400 hover:text-white transition-all"
+                  title="Exportar PDF"
+                >
+                  <FileDown size={14} />
+                  <span className="hidden sm:inline">{loading ? '…' : 'PDF'}</span>
+                </button>
+              )}
+            </PDFDownloadLink>
           </div>
         </header>
 
@@ -194,9 +211,9 @@ export default function ProjectView({ projectId, onBack }: Props) {
               <div className="flex-shrink-0 flex items-start pt-1">
                 <button
                   onClick={() => addFlow(projectId, `Fluxo ${project.flows.length + 1}`)}
-                  className="w-9 h-9 rounded-full bg-[#4f8ef7]/10 hover:bg-[#4f8ef7]/20 text-[#4f8ef7] flex items-center justify-center text-xl leading-none transition-colors"
-                  title="Novo fluxo"
-                >+</button>
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9b59b6]/10 hover:bg-[#9b59b6]/20 text-[#9b59b6] text-xs font-semibold border border-[#9b59b6]/20 hover:border-[#9b59b6]/40 transition-all"
+                  title="Continuar fluxo em paralelo"
+                >+ Continuar Fluxo</button>
               </div>
             </div>
           </div>

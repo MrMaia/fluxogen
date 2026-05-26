@@ -54,6 +54,9 @@ export interface Project {
   segmentId: string
   name: string
   description?: string
+  version?: string
+  projectDate?: string
+  approvedBy?: string
   createdAt: string
   entradas: Item[]
   entradaTypes: ItemType[]

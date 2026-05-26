@@ -76,7 +76,7 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
       <div className="bg-[#14142a] border border-[#2a2a4a] rounded-xl w-full max-w-lg max-h-[92vh] overflow-y-auto shadow-2xl">
         <div className="p-6">
           <h2 className="text-white font-semibold text-lg mb-5">
-            {initial.title ? 'Editar Etapa' : 'Nova Etapa'}
+            {initial.title ? 'Editar Tarefa' : 'Nova Tarefa'}
           </h2>
 
           <div className="flex gap-2 mb-5">
@@ -113,7 +113,7 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
             autoFocus
             value={title}
             onChange={e => setTitle(e.target.value)}
-            placeholder={type === 'process' ? 'Descrição da etapa' : 'Pergunta da decisão'}
+            placeholder={type === 'process' ? 'Descrição da tarefa' : 'Pergunta da decisão'}
             className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-4 text-sm focus:outline-none focus:border-[#4f8ef7]"
           />
 
@@ -130,7 +130,7 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
-              placeholder="Detalhes adicionais sobre esta etapa"
+              placeholder="Detalhes adicionais sobre esta tarefa"
               rows={2}
               className="w-full bg-[#0f0f1a] border border-[#2a2a4a] text-white rounded-lg px-3 py-2 mb-5 text-sm focus:outline-none focus:border-[#4f8ef7] resize-none"
             />
@@ -152,10 +152,10 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
                   onChange={e => setYesNextStepId(e.target.value)}
                   className="w-full bg-[#16213e] border border-[#3ecf8e]/20 text-white rounded px-2 py-1.5 text-xs focus:outline-none"
                 >
-                  <option value="">— selecione a etapa destino —</option>
+                  <option value="">— selecione a tarefa destino —</option>
                   {otherSteps.map(s => (
                     <option key={s.id} value={s.id}>
-                      Etapa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
+                      Tarefa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
                     </option>
                   ))}
                 </select>
@@ -174,10 +174,10 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
                   onChange={e => setNoNextStepId(e.target.value)}
                   className="w-full bg-[#16213e] border border-[#e85d75]/20 text-white rounded px-2 py-1.5 text-xs focus:outline-none"
                 >
-                  <option value="">— selecione a etapa destino —</option>
+                  <option value="">— selecione a tarefa destino —</option>
                   {otherSteps.map(s => (
                     <option key={s.id} value={s.id}>
-                      Etapa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
+                      Tarefa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
                     </option>
                   ))}
                 </select>
@@ -189,16 +189,16 @@ function StepModal({ initial, entradas, saidas, allSteps, currentStepId, onSave,
           {type === 'process' && otherSteps.length > 0 && (
             <div className="mb-5 bg-[#0f0f1a] border border-[#2a2a4a] rounded-lg p-3">
               <p className="text-xs text-slate-400 font-medium mb-3">Conexão de fluxo</p>
-              <label className="text-xs text-slate-500 mb-1 block">Ir para etapa (se não for sequencial)</label>
+              <label className="text-xs text-slate-500 mb-1 block">Ir para tarefa (se não for sequencial)</label>
               <select
                 value={nextStepId}
                 onChange={e => setNextStepId(e.target.value)}
                 className="w-full bg-[#16213e] border border-[#2a2a4a] text-white rounded px-2 py-1.5 text-xs focus:outline-none"
               >
-                <option value="">— próxima etapa (padrão) —</option>
+                <option value="">— próxima tarefa (padrão) —</option>
                 {otherSteps.map(s => (
                   <option key={s.id} value={s.id}>
-                    Etapa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
+                    Tarefa {sorted.findIndex(x => x.id === s.id) + 1} — {s.title}
                   </option>
                 ))}
               </select>
@@ -375,17 +375,17 @@ export default function FluxoPanel({ projectId, flow, totalFlows, overStepId, hi
           )}
           <button
             onClick={() => setAdding(true)}
-            className="w-7 h-7 rounded-full bg-[#4f8ef7]/10 hover:bg-[#4f8ef7]/20 text-[#4f8ef7] flex items-center justify-center text-lg leading-none transition-colors"
-            title="Adicionar etapa"
-          >+</button>
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#4f8ef7]/10 hover:bg-[#4f8ef7]/20 text-[#4f8ef7] text-xs font-semibold border border-[#4f8ef7]/20 hover:border-[#4f8ef7]/40 transition-all"
+            title="Adicionar tarefa"
+          >+ Adicionar Tarefa</button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto pr-1">
         {sorted.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-slate-700 text-xs">Nenhuma etapa ainda</p>
-            <p className="text-slate-800 text-[10px] mt-1">Arraste entradas/saídas sobre uma etapa para vinculá-las</p>
+            <p className="text-slate-700 text-xs">Nenhuma tarefa ainda</p>
+            <p className="text-slate-800 text-[10px] mt-1">Arraste entradas/saídas sobre uma tarefa para vinculá-las</p>
           </div>
         )}
 
@@ -463,8 +463,8 @@ export default function FluxoPanel({ projectId, flow, totalFlows, overStepId, hi
 
       {deleteTarget && (
         <ConfirmModal
-          message={`Excluir etapa "${deleteTarget.title}"?`}
-          detail="As conexões para esta etapa também serão removidas."
+          message={`Excluir tarefa "${deleteTarget.title}"?`}
+          detail="As conexões para esta tarefa também serão removidas."
           onConfirm={() => { deleteFluxoStep(projectId, deleteTarget.id); setDeleteTarget(null) }}
           onCancel={() => setDeleteTarget(null)}
         />
@@ -473,7 +473,7 @@ export default function FluxoPanel({ projectId, flow, totalFlows, overStepId, hi
       {deleteFlowConfirm && (
         <ConfirmModal
           message={`Excluir fluxo "${flow.name}"?`}
-          detail="Todas as etapas deste fluxo serão excluídas permanentemente."
+          detail="Todas as tarefas deste fluxo serão excluídas permanentemente."
           onConfirm={() => { deleteFlow(projectId, flow.id); setDeleteFlowConfirm(false) }}
           onCancel={() => setDeleteFlowConfirm(false)}
         />

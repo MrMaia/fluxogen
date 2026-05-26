@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useDraggable } from '@dnd-kit/core'
+import { Tag } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import type { Item, ItemType } from '../types'
 import { TYPE_PALETTE } from '../types'
@@ -75,6 +76,7 @@ function DraggableSaida({ item, projectId, accentColor, types, activeDragType }:
         dragListeners={listeners}
         dragAttributes={attributes}
         isDragging={isDragging}
+        roleLabel="Cliente"
         onUpdate={(name, role, typeId) => updateSaida(projectId, item.id, name, role, typeId)}
         onDelete={() => setDeleteTarget(true)}
       />
@@ -162,10 +164,11 @@ export default function SaidasPanel({ projectId, activeDragType, collapsed, onTo
           >›</button>
           <button
             onClick={() => setAddingType(true)}
-            className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-slate-500 hover:text-[#f5a623] hover:bg-[#f5a623]/10 border border-transparent hover:border-[#f5a623]/20 transition-all"
-            title="Novo tipo"
+            className="flex items-center gap-1 px-2 py-1 rounded-md text-[10px] text-[#f5a623] bg-[#f5a623]/10 hover:bg-[#f5a623]/20 border border-[#f5a623]/30 hover:border-[#f5a623]/60 transition-all font-semibold"
+            title="Novo tipo de saída"
           >
-            <span className="font-bold">T</span><span>+</span>
+            <Tag size={11} />
+            <span>+</span>
           </button>
           <button
             onClick={() => setAdding(true)}
@@ -226,7 +229,7 @@ export default function SaidasPanel({ projectId, activeDragType, collapsed, onTo
               value={newRole}
               onChange={e => setNewRole(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') handleAdd(); if (e.key === 'Escape') setAdding(false) }}
-              placeholder="Responsável (ex: GEOTECNIA)"
+              placeholder="Cliente (ex: GEOTECNIA)"
               className="w-full bg-transparent text-slate-400 text-xs border-b border-[#2a2a4a] pb-1 mb-3 focus:outline-none uppercase"
             />
             <div className="flex gap-2 justify-end">

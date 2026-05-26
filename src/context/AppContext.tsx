@@ -36,9 +36,9 @@ interface AppContextValue {
   deleteSegment: (id: string) => void
   updateSegment: (id: string, name: string, description?: string) => void
 
-  createProject: (segmentId: string, name: string, description?: string) => void
+  createProject: (segmentId: string, name: string, description?: string, version?: string, projectDate?: string, approvedBy?: string) => void
   deleteProject: (id: string) => void
-  updateProject: (id: string, name: string, description?: string) => void
+  updateProject: (id: string, name: string, description?: string, version?: string, projectDate?: string, approvedBy?: string) => void
 
   addEntrada: (projectId: string, name: string, role?: string, typeId?: string) => void
   updateEntrada: (projectId: string, itemId: string, name: string, role?: string, typeId?: string) => void
@@ -113,9 +113,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [data, persist])
 
   // Projects
-  const createProject = useCallback((segmentId: string, name: string, description?: string) => {
+  const createProject = useCallback((segmentId: string, name: string, description?: string, version?: string, projectDate?: string, approvedBy?: string) => {
     const project: Project = {
-      id: uid(), segmentId, name, description,
+      id: uid(), segmentId, name, description, version, projectDate, approvedBy,
       createdAt: new Date().toISOString(),
       entradas: [],
       entradaTypes: [],
@@ -130,8 +130,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     updateProjects(ps => ps.filter(p => p.id !== id))
   }, [updateProjects])
 
-  const updateProject = useCallback((id: string, name: string, description?: string) => {
-    updateProjects(ps => ps.map(p => p.id === id ? { ...p, name, description } : p))
+  const updateProject = useCallback((id: string, name: string, description?: string, version?: string, projectDate?: string, approvedBy?: string) => {
+    updateProjects(ps => ps.map(p => p.id === id ? { ...p, name, description, version, projectDate, approvedBy } : p))
   }, [updateProjects])
 
   // Entradas
